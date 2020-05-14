@@ -16,7 +16,6 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import make_scorer, accuracy_score, f1_score, fbeta_score, classification_report
-from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
 from scipy.stats import gmean
 
@@ -24,6 +23,14 @@ nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 nltk.download('stopwords')
 
 def load_data(database_filepath):
+    '''
+    Input-: The database file info is provided
+
+    Loads data from db table to this python script
+
+    Output-:X,Y and columns of the Y
+
+    '''
     
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('new_disaster',engine)
@@ -38,14 +45,14 @@ def load_data(database_filepath):
 
 
 def tokenize(text,url_place_holder_string="urlplaceholder"):
-    """
-    Tokenize the text function
-    
-    Arguments:
-        text -> Text message which needs to be tokenized
-    Output:
-        clean_tokens -> List of tokens extracted from the provided text
-    """
+    '''
+    Input -: text 
+
+    Tokenize,lemmaize,and remove the url from the messages
+
+    output - tokens in form of list
+   
+    '''
     
  
     url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
@@ -88,6 +95,13 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
         return pd.DataFrame(X_tagged)
 
 def build_model():
+    '''
+    This create pipeline which will be used for training prupose.
+
+    Output-:Ml model
+
+
+    '''
         pipeline = Pipeline([
         ('features', FeatureUnion([
 
@@ -108,6 +122,12 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+    Input-: we used test data to evaluate out trained model
+
+    output-: report of individual columns with avg score
+
+    '''
     
     y_prediction_test = model.predict(X_test)
     print("This is evalution of the training data set it has f1-score,precison,recall of all the columns")
@@ -116,6 +136,10 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    '''
+    saved model as pickle file
+
+    '''
     
     pickle.dump(model, open(model_filepath, 'wb'))
 
