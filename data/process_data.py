@@ -5,6 +5,15 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    '''
+    Input -: Csv path of both the file
+
+    Loading data from csv to python script
+
+    Output -: Dataframe with merging of two csv
+
+
+    '''
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = messages.merge(categories,on='id')
@@ -13,6 +22,16 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    '''
+    Input-: Dataframe for cleaning up
+
+    created new dataframe which contains the 36 categories requried,merge and remove the categories columns from the df
+
+
+    Output-: Cleaned dataframe
+
+    '''
+
     # create a dataframe of the 36 individual category columns
     new_categories = pd.DataFrame(index=np.arange(1), columns=np.arange(36))
     # select the first row of the categories dataframe
@@ -47,12 +66,15 @@ def clean_data(df):
     return df
 
 
-
-
-    
-
-
 def save_data(df, database_filename):
+    '''
+    Input-:Dataframe and database file name
+
+    This is create database file and new disaster name table
+
+    output-Nothing
+
+    '''
     
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('new_disaster', engine, index=False,if_exists='replace')
