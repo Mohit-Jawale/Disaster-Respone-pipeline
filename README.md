@@ -27,6 +27,12 @@ In this pipeline we have used sklearn pipeline to bulit ml pipeline with countve
 
 **step 5** -: **HAVE FUN**
 
+#### File Description
+* **app**-: This folder has two file one templates and one app.py. app.py is the main file from which the project is running.
+* **data** -This folder has two csv files which are the files provided by figure eight company for this project,their is db file which gets created when ETL code in the folder gets run.
+
+* **model**-This folder has one ml pipeline code and one pickle file.Pickle file is the trained file we get after ml code is run in the folder.
+
 ## Author
 
 **Mohit Jawale**
