@@ -102,7 +102,7 @@ def build_model():
 
 
     '''
-        pipeline = Pipeline([
+    pipeline = Pipeline([
         ('features', FeatureUnion([
 
             ('text_pipeline', Pipeline([
@@ -116,7 +116,7 @@ def build_model():
         ('classifier', MultiOutputClassifier(AdaBoostClassifier()))
         ])
         
-        return pipeline
+    return pipeline
         
         
 
